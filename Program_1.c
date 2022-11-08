@@ -51,8 +51,6 @@ void insert()
             fflush(stdin);
         }
         fclose(fp);
-        printf("\nPress any key to continue: ");
-        getch();
         menu();
 }
 void list()
