@@ -147,7 +147,7 @@ void modify()
     }
     if(flag==0)
     {
-        printf("\nStudent not found, Enter a valid STP");
+        printf("\nStudent not found, Enter a valid  SID");
         modify();
     }
     fclose(fp);
