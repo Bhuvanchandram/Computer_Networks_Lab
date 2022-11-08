@@ -66,8 +66,6 @@ void list()
         printf("%s\t%s\t%s\t%d\t\t%s\n",stu.sid,stu.name,stu.branch,stu.semester,stu.address);
     }
     fclose(fp);
-    printf("\nPress any key to continue: \n");
-    getch();
     menu();
 }
 void list_branch()
