@@ -1,4 +1,4 @@
-/*Java program to implement token bucket algorithm*/
+/*Java program to implement leaky bucket algorithm*/
 import java.util.Scanner;
 public class Main{
         public static void main(String[] args){
