@@ -1,30 +1,40 @@
-/*Java program to implement leaky bucket algorithm*/
-import java.util.Scanner;
-public class Main{
-        public static void main(String[] args){
-            Scanner s=new Scanner(System.in);
-            int bucket_size,input_rate,output_rate,time_steps,current_size=0;
-            System.out.print("Enter the bucket size: ");
-            bucket_size=s.nextInt();
-            System.out.print("\nEnter input rate: ");
-            input_rate=s.nextInt();
-            System.out.print("\nEnter output rate: ");
-            output_rate=s.nextInt();
-            System.out.println("Enter the steps to simulate: ");
-            time_steps=s.nextInt();
-            for(int i=0;i<time_steps;i++){
-                int space_left=bucket_size-current_size;
-                int loss=0;
-                if(input_rate<=space_left){
-                    current_size+=input_rate;
-                }else{
-                    loss=input_rate-space_left;
-                    current_size=bucket_size;
-                }
-                current_size-=output_rate;
-                System.out.print("\n");
-                System.out.println("Time= "+i+"s | Bucket/Buffer status: "+current_size+"/"+bucket_size+", Packet loss = "+loss);
-            }
-            s.close();
-        }
+public class LeakyBucket {
+    private static final int BUCKET_SIZE = 10;
+    private static final int PACKET_RATE = 5;
+
+    private int bucketSize;
+    private int packetRate;
+    private int currentSize;
+    private long lastUpdateTime;
+
+    public LeakyBucket() {
+        this(BUCKET_SIZE, PACKET_RATE);
+    }
+
+    public LeakyBucket(int bucketSize, int packetRate) {
+        this.bucketSize = bucketSize;
+        this.packetRate = packetRate;
+        this.currentSize = 0;
+        this.lastUpdateTime = System.currentTimeMillis();
+    }
+
+    public boolean canSendPacket() {
+        // Calculate elapsed time since last update
+        long elapsedTime = System.currentTimeMillis() - lastUpdateTime;
+
+        // Update the current size of the bucket
+        currentSize = Math.max(0, currentSize - elapsedTime * packetRate);
+
+        // Update the last update time
+        lastUpdateTime = System.currentTimeMillis();
+
+        // Check if there is room in the bucket for the packet
+        return currentSize + 1 <= bucketSize;
+    }
+
+    public void sendPacket() {
+        // Increment the current size of the bucket
+        currentSize++;
+    }
 }
+
